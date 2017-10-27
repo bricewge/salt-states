@@ -1,0 +1,9 @@
+[Unit]
+Description=Reload nginx configuration when sites-available changes
+
+[Path]
+PathChanged=/etc/nginx/sites-available/blog.bricewge.fr
+Unit=nginx-reload.path
+
+[Install]
+WantedBy=multi-user.target

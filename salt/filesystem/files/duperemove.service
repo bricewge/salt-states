@@ -1,0 +1,9 @@
+[Unit]
+Description="Dedupicate durian-data drive"
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/duperemove -dhrv --hashfile /tmp/duperemove.hash /mnt/data
+Nice=19
+IOSchedulingClass=3
+IOSchedulingPriority=7

@@ -1,0 +1,2 @@
+* salt-states
+Old configuration of my systems done in Saltstack.

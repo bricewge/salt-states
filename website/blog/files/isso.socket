@@ -1,0 +1,11 @@
+[Unit]
+Description=Isso socket
+
+[Socket]
+SocketUser= isso
+SocketGroup= www-data
+SocketMode=0660
+ListenStream=/run/isso.sock
+
+[Install]
+WantedBy=sockets.target

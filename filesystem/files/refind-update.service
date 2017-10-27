@@ -1,0 +1,6 @@
+[Unit]
+Description=rEFInd bootloader update
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/refind-install

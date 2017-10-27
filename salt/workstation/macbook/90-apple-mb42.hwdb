@@ -1,0 +1,9 @@
+##########################################
+# Apple
+##########################################
+
+# Macbook Air 4.2
+evdev:input:b0003v05ACp024D*
+  KEYBOARD_KEY_70029=esc	# evtest original
+  KEYBOARD_KEY_7003c=sysrq      # Multimedia key F3
+  # KEYBOARD_KEY_7003d=r          # Multimedia keyF4

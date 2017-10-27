@@ -1,0 +1,92 @@
+# -*- mode: conf; -*-
+global
+	log /dev/log	local0
+	log /dev/log	local1 notice
+	chroot /var/lib/haproxy
+	user haproxy
+	group haproxy
+	daemon
+
+defaults
+	log	global
+	mode	http
+#	option	httplog
+	option	dontlognull
+        timeout connect 5000
+        timeout client  50000
+        timeout server  50000
+	errorfile 400 /etc/haproxy/errors/400.http
+	errorfile 403 /etc/haproxy/errors/403.http
+	errorfile 408 /etc/haproxy/errors/408.http
+	errorfile 500 /etc/haproxy/errors/500.http
+	errorfile 502 /etc/haproxy/errors/502.http
+	errorfile 503 /etc/haproxy/errors/503.http
+	errorfile 504 /etc/haproxy/errors/504.http
+
+
+# Source : http://blog.octo.com/gerer-dynamiquement-lacces-a-ses-environnements-avec-haproxy-et-le-sni/
+# deux reverse-proxies sont configurés dans ce fichier :  
+
+# le premier est un reverse-proxy HTTP simple gérant le trafic arrivant
+# en HTTP, donc sur le port 80
+listen http_reverseproxy *:80
+    mode http
+
+    # le reverse-proxy HTTP utilise le header ‘host' pour son routage
+    # “-m end” est une condition de matching indiquant que la chaîne
+    # de caractères testée (“req.hdr(host)”) doit finir par la chaîne de
+    # caractères donnée en paramètre (“demo.mon.projet.net”)
+    use-server bricewge if { req.hdr(host) -m end bricewge.fr }
+    #use-server perpinux if { req.hdr(host) -m end perpinux.org }
+    use-server alicelab if { req.hdr(host) -m end alicelab.fr }
+    use-server energie-citoyenne if { req.hdr(host) -m end energiecitoyenne.org }
+    
+    # il faut également indiquer à quoi correspondent les serveurs indiqués
+    # dans les directives “use-server”
+    # “weight 0” attribue un poids nul à ces serveurs afin qu’ils ne
+    # puissent pas recevoir de trafic autre que celui routé par les
+    # directives “use-server”
+    server bricewge  192.168.91.159:80 weight 0
+    #server perpinux  192.168.91.159:80 weight 0
+    server alicelab  192.168.91.2:80 weight 0
+    server energie-citoyenne  192.168.91.7:80 weight 0
+
+    # un serveur par défaut peut être configuré, c’est le seul à ne pas
+    # avoir un poids nul (le poids par défaut est de 1). Il est ici
+    # désactivé, la requête ne sera donc pas transmise si elle ne
+    # correspond à aucun des environnements
+    server http_default 127.0.0.1:8080 disabled
+
+# le second est un reverse-proxy TCP qui base son routage sur le SNI et
+# gère le trafic arrivant en HTTPS, donc sur le port 443
+listen ssl_reverseproxy *:443
+    # nous fonctionnons cette fois ci en mode TCP
+    mode tcp
+
+    # cette ligne indique à HAProxy qu’il doit attendre d’avoir accumulé
+    # suffisamment d’information afin que l’inspection du contenu TCP
+    # puisse avoir lieu (avec une durée maximale de 5 seconde)
+    tcp-request inspect-delay 5s
+
+    # nous acceptons d’établir la connexion uniquement si la requête est un
+    # “Client Hello” (donc de hello_type 1), c’est à dire le premier message
+    # envoyé par un client pour établir une connexion SSL (et contenant les
+    # informations de SNI)
+    # cette condition permet également de s’assurer que suffisamment
+    # d’octets ont été accumulés avant de tenter d’accéder aux informations
+    # de SNI pour effectuer le routage
+    tcp-request content accept if { req.ssl_hello_type 1 }
+
+    # cette fois ci la chaîne de caractère testée pour le matching
+    # est req.ssl_sni, c’est à dire le champ SNI qu’a trouvé HAProxy
+    use-server bricewge if { req.ssl_sni -m end bricewge.fr }
+    #use-server perpinux if { req.ssl_sni -m end perpinux.org }
+    use-server alicelab if { req.ssl_sni -m end alicelab.fr }
+    use-server energie-citoyenne if { req.ssl_sni -m end ergiecitoyenne.org }
+
+    server bricewge  192.168.91.159 weight 0
+    #server perpinux  192.168.91.159 weight 0
+    server alicelab  192.168.91.2 weight 0
+    server energie-citoyenne  192.168.91.7 weight 0
+    
+    server ssl_default 127.0.0.1:4433 disabled

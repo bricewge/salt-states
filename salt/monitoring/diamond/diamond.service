@@ -1,0 +1,9 @@
+[Unit]
+Description=diamond - A system statistics collector for graphite
+
+[Service]
+ExecStart=/usr/local/bin/diamond --log-stdout --foreground
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

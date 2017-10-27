@@ -1,0 +1,10 @@
+[Unit]
+Description = "Attic, daily backup"
+
+[Timer]
+OnCalendar = Daily
+Persistent = True
+
+[Install]
+WantedBy = timers.target
+

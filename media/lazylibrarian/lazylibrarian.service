@@ -1,0 +1,14 @@
+[Unit]
+Description=Automatic books downloader
+
+[Service]
+User=lazylibrarian
+Group=lazylibrarian
+Type=simple
+Environment=LC_ALL=C
+ExecStart=/opt/lazylibrarian/LazyLibrarian.py --datadir /srv/lazylibrarian --nolaunch
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

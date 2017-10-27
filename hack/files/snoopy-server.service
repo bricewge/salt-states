@@ -1,0 +1,9 @@
+[Unit]
+Description="Modular digital terrestrial tracking server"
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/snoopy -v -m server
+
+[Install]
+WantedBy=multi-user.target

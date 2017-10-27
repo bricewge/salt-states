@@ -1,0 +1,9 @@
+[Unit]
+Description="Renewal of Let's Encrypt certificates"
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/certbot renew --force-renew --noninteractive               \
+                           --pre-hook \"/bin/systemctl stop nginx.service\"   \
+                           --post-hook \"/bin/systemctl start nginx.service\"
+

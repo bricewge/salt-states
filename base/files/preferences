@@ -1,0 +1,15 @@
+Package: *
+Pin: release a=jessie
+Pin-Priority: 600
+
+Package: *
+Pin: release a=jessie-backports
+Pin-Priority: 500
+
+Package: *
+Pin: release a=testing
+Pin-Priority: 300
+
+Package: *
+Pin: release a=unstable
+Pin-Priority: 50

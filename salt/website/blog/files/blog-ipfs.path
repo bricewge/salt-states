@@ -1,0 +1,8 @@
+[Unit]
+Description=Publish blog.bricewge.fr on IPFS when it content changes
+
+[Path]
+PathChanged=/srv/nginx/blog.bricewge.fr
+
+[Install]
+WantedBy=multi-user.target

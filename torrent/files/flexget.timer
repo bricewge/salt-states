@@ -1,0 +1,10 @@
+[Unit]
+Description = "Flexget hourly"
+
+[Timer]
+OnCalendar = Hourly
+Persistent = True
+
+[Install]
+WantedBy = timers.target
+

@@ -1,0 +1,4 @@
+include:
+  - .bluetooth
+  - .cups
+  - .envoy

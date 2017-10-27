@@ -1,0 +1,3 @@
+machine localhost
+  login {{ salt['pillar.get']('transmission:username') }}
+  password {{ salt['pillar.get']('transmission:password') }}

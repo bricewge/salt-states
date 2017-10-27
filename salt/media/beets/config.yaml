@@ -1,0 +1,17 @@
+directory: /mnt/data/musique
+library: /mnt/data/musique/.musiclibrary.blb
+
+import:
+    move: yes
+
+# * Plugins
+plugins: inline convert web chroma fromfilename discogs lastgenre scrub 
+
+embedart:
+    remove_art_file: yes
+
+replaygain:
+    backend: gstreamer
+
+# * TODO Add plugin replaygain
+# * TODO Fix fetchart embedart bugs

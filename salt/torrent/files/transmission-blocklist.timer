@@ -1,0 +1,9 @@
+[Unit]
+Description = "Daily update of Transmission's blocklist"
+
+[Timer]
+OnCalendar = Daily
+Persistent = True
+
+[Install]
+WantedBy = timers.target

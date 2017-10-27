@@ -1,0 +1,11 @@
+[Unit]
+Description=Mount System Backups Directory
+
+[Mount]
+What=LABEL="durian-data"
+Where=/mnt/backup
+Type=btrfs
+Options=noatime,space_cache,compress=lzo,autodefrag,nodev,user_subvol_rm_allowed,subvol=backup
+
+[Install]
+WantedBy=multi-user.target

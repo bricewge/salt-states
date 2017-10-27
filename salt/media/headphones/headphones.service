@@ -1,0 +1,11 @@
+[Unit]
+Description=Automatic music downloader
+
+[Service]
+ExecStart=/opt/headphones/Headphones.py --config /etc/headphones/headphones.ini --datadir /srv/headphones --nolaunch
+Type=simple
+User=headphones
+Group=headphones
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+# Inspired from https://gitlab.com/gitlab-org/omnibus-gitlab-runner/blob/master/doc/install/upstart/gitlab-runner.conf
+[Unit]
+Description = "GitLab Runner"
+
+[Service]
+Type = forking # not sure, maybe "simple"
+Restart = always
+User = gitlab-runner
+Nice = 3
+Environement = HOME=/home/gitlab-runner
+ExecStart = /opt/gitlab-runner/bin/runner -C $HOME

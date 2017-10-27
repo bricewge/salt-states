@@ -1,0 +1,6 @@
+[Unit]
+Description=Backup /srv/attic subvolume
+After=local-fs.target
+
+[Service]
+ExecStart=/usr/local/bin/backup-attic.sh

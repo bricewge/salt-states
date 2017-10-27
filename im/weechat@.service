@@ -1,0 +1,14 @@
+[Unit]
+Description = "Weechat relay for %i"
+Requires = network.target
+After = network.target
+
+[Service]
+Type = oneshot
+User=%i
+RemainAfterExit=yes
+ExecStart=/usr/bin/tmux new-session -d -s weechat /usr/bin/weechat
+ExecSotp=/usr/bin/tmux kill-session -t weechat
+
+[Install]
+WantedBy=multi-user.target

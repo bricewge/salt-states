@@ -1,0 +1,3 @@
+include:
+  - .gui-app
+  - .gnome

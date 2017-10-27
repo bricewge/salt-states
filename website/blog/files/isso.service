@@ -1,0 +1,11 @@
+[Unit]
+Description=Isso comment server
+Requires=isso.socket
+
+[Service]
+User=isso
+Environment="ISSO_SETTINGS=/etc/isso/isso.conf"
+ExecStart=/usr/bin/gunicorn --preload isso.run
+
+[Install]
+WantedBy=multi-user.target

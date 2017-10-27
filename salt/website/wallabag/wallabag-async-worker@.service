@@ -1,0 +1,14 @@
+[Unit]
+Description="Redis %i worker for Wallabag async import"
+After=redis.service
+
+[Service]
+User=www-data
+Group=www-data
+Type=simple
+WorkingDirectory=/srv/nginx/wallabag/
+ExecStart=/srv/nginx/wallabag/bin/console wallabag:import:redis-worker -e=prod %i -vv
+
+
+[Install]
+WantedBy=multi-user.target

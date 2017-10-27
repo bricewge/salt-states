@@ -1,0 +1,8 @@
+[Unit]
+Description=Control Group manager
+
+[Service]
+ExecStart=/usr/bin/cgmanager
+
+[Install]
+WantedBy=sysinit.target

@@ -1,0 +1,5 @@
+# Verify that it is the right mine data
+{% for server, ca_key in salt['mine.get']('*', 'ssh-certificate', expr_form='glob').items() %}
+#{{ server }}
+{{ ca_key }}
+{% endfor %}

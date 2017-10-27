@@ -1,0 +1,9 @@
+[Unit]
+Description=IPFS global, versioned, peer-to-peer filesystem
+
+[Service]
+User=ipfs
+ExecStart=/usr/local/bin/ipfs daemon --init=True
+
+[Install]
+WantedBy=multi-user.target

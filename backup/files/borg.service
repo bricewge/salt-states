@@ -1,0 +1,30 @@
+[Unit]
+Description = "Borg, backup the entire system"
+After = network-online.target
+
+[Service]
+Type = oneshot
+# Lowest CPU and IO priority
+Nice = 19
+IOSchedulingPriority = 7 
+User = root
+ExecStart = /bin/bash -c '/usr/bin/borg create --stats \
+"{{ salt['pillar.get']('borg:repo') }}::`date +%%Y%%m%%d-%%H`" \
+    / \
+    /boot \
+    /boot/efi \
+    /home \
+    --exclude-caches \
+    --do-not-cross-mountpoints \
+    --exclude "*.cache" \
+    --exclude "*lost+found" \
+    --exclude /sys \
+    --exclude /mnt \
+    --exclude /dev \
+    --exclude /proc \
+    --exclude /run'
+ExecStart = /usr/bin/borg prune -v "{{ salt['pillar.get']('borg:repo') }}" \
+    --keep-hourly 72 \
+    --keep-daily 14 \
+    --keep-weekly 10 \
+    --keep-monthly 12

@@ -1,0 +1,10 @@
+[Unit]
+Description = "Update Transmission's blocklist"
+Requires = network.target
+After = network.target
+
+[Service]
+Type = oneshot
+User = debian-transmission
+WorkingDirectory = /var/lib/transmission-daemon/
+ExecStart = /usr/bin/transmission-remote -N /var/lib/transmission-daemon/.config/transmission-daemon/netrc --blocklist-update

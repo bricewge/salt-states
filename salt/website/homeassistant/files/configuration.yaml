@@ -1,0 +1,78 @@
+# * Home assistant
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Domicile
+  # Location required to calculate the time the sun rises and sets
+  latitude: 42.6976
+  longitude: 2.8954
+  # C for Celcius, F for Fahrenheit
+  temperature_unit: C
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Paris
+
+# * Default config
+# Discover some devices automatically
+discovery:
+
+# Enables support for tracking state changes over time.
+history:
+
+# Allows you to issue voice commands from the frontend
+conversation:
+
+# Track the sun
+sun:
+
+# Enables the frontend
+frontend:
+
+# View all events in a logbook
+logbook:
+
+# Checks for available updates
+updater:
+
+# * MQTT
+# Local mosquitto instance
+mqtt:
+  broker: 127.0.0.1
+  port: 8883
+  client_id: home-assistant
+  keepalive: 60
+  certificate: /etc/letsencrypt/live/mqtt.bricewge.fr/chain-ca.pem
+
+# * Sensors
+sensor:
+  - platform: mqtt
+    state_topic: "home/livingroom/temperature"
+    name: "Temperature salon"
+    qos: 0
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    state_topic: "home/livingroom/humidity"
+    name: "Humiditée salon"
+    qos: 0
+    unit_of_measurement: "%"
+
+# * Lights
+#home/livingroom/tv/light:
+light:
+  - platform: mqtt
+    state_topic: "home/livingroom/tv/light/state"
+    command_topic: "home/livingroom/tv/light/set"
+    name: "Lumière TV"
+    qos: 2
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+  
+# * Media players
+media_player:
+  - platform: kodi
+    url: http://192.168.10.68/jsonrpc
+    name: "cassis"
+
+# * Grafana
+influxdb:
+  host: 127.0.0.1
+  database: homeassistant

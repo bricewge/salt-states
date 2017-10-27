@@ -1,0 +1,7 @@
+@cert-authority *.bricewge.fr ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDKrJeM9qdO1F3lEhAbMKmmbn7be8MGqLLibBHv7hzLjNIpNaW8GUWiRrSgzRdrbH9BHSUFzIWnUP6/PdpHIGfDOoCHDdKC/luBhxT20+ZUKpmp9gumhj1nW7qRqGmvNBzyieFD/u4FjoExNbAL02tMQ//e/AW0x3QGDF111hEtxD0ITnbEOeix3Ysdt5QnO9PZAT6pqCqjw/ljqkPg/5Ab9vg+BzIE6UmbToHLRxGPiXRhq1xE3nC72HjnZw074h5SXGeYameqWX9JFf41jjabD2V3j0A4QEr1TP4YP0O1q0F5hIcDWcCtGfbVDWlFn0QyRyQ4sPvqkIEA7L7qwmV3B1GstvrpajvXzPrmf9qBZ9Ak9NltBHjYp2UqDcCohUw1OdH7xgpLvxOD7FX8B+qcFWPxsKenv7KaYS1ah5lJoFC/KmPrw0tNm+wVxrGtUyw1OtN+LLVFsguz4tJpmfraYLJ7jght0Z4RnGE4J135hc3GCrpxNrZ9IWtSyMOZdVlMSVdhnkwS0edqKDGxkW13VsVUV+8/iUe75+WwTKj19Wl/w1tInWfJRfy6bEQpgxbo20QDDrnZyr5HJxGLYEcAU182AxZmbUdPuQLO1ZvDG3C2hl+SWsjhoU4lRwBtSr8pNGHA76MVO7ygeUTNbuNbex19F1zeYPgQTRv4O3AN0Q== bricewge@mba42
+
+# Added by saltstack
+{% for server, pubkey in salt['mine.get']('*', 'attic-sshpubkey', expr_form='glob').items() %}
+#{{ server }}
+{{ pubkey }}
+{% endfor %}

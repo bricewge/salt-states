@@ -1,0 +1,2 @@
+SUBSYSTEM=="block", ENV{ID_FS_LABEL}=="backup", ACTION=="add",
+ENV{SYSTEMD_WANTS}="backup-attic.service"
